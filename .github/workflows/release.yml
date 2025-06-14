@@ -32,3 +32,4 @@ jobs:
         with:
           artifacts: 'sekai-sonolus-server.tar.gz'
           tag: ${{ github.event.inputs.tag }}
+          allowUpdates: true
