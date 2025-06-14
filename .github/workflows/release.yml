@@ -2,6 +2,11 @@ name: Release
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Git tag to use for release'
+        required: true
+        default: 'v1.0.0'
   push:
     tags:
       - 'v*'
@@ -18,9 +23,12 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
+
       - run: npm ci
       - run: npm run build
       - run: tar czvf sekai-sonolus-server.tar.gz dist package.json package-lock.json config.example.json LICENSE.txt README.md
+
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'sekai-sonolus-server.tar.gz'
+          tag: ${{ github.event.inputs.tag }}
